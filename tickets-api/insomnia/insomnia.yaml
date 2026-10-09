@@ -1,0 +1,210 @@
+type: collection.insomnia.rest/5.0
+name: Tickets API
+meta:
+  id: wrk_tickets_api
+  created: 1791500000000
+  modified: 1791500000000
+  description: REST API для системы тикетов
+collection:
+  - name: Auth
+    meta:
+      id: fld_auth
+      created: 1791500000000
+      modified: 1791500000000
+      sortKey: 1
+    children:
+      - url: "{{ _.base_url }}/api/register"
+        name: Register
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "name": "Иван Петров",
+              "email": "ivan@example.com",
+              "password": "password123",
+              "password_confirmation": "password123"
+            }
+        headers:
+          - name: Accept
+            value: application/json
+          - name: Content-Type
+            value: application/json
+        meta:
+          id: req_register
+          created: 1791500000000
+          modified: 1791500000000
+          isPrivate: false
+      - url: "{{ _.base_url }}/api/login"
+        name: Login
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "email": "ivan@example.com",
+              "password": "password123"
+            }
+        headers:
+          - name: Accept
+            value: application/json
+          - name: Content-Type
+            value: application/json
+        meta:
+          id: req_login
+          created: 1791500000000
+          modified: 1791500000000
+          isPrivate: false
+      - url: "{{ _.base_url }}/api/logout"
+        name: Logout
+        method: POST
+        headers:
+          - name: Accept
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        meta:
+          id: req_logout
+          created: 1791500000000
+          modified: 1791500000000
+          isPrivate: false
+  - name: Tickets
+    meta:
+      id: fld_tickets
+      created: 1791500000000
+      modified: 1791500000000
+      sortKey: 2
+    children:
+      - url: "{{ _.base_url }}/api/tickets"
+        name: List tickets
+        method: GET
+        headers:
+          - name: Accept
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        meta:
+          id: req_tickets_list
+          created: 1791500000000
+          modified: 1791500000000
+          isPrivate: false
+      - url: "{{ _.base_url }}/api/tickets"
+        name: Create ticket
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "title": "Не работает авторизация",
+              "body": "При входе получаю ошибку 500."
+            }
+        headers:
+          - name: Accept
+            value: application/json
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        meta:
+          id: req_ticket_create
+          created: 1791500000000
+          modified: 1791500000000
+          isPrivate: false
+      - url: "{{ _.base_url }}/api/tickets/1"
+        name: Show ticket
+        method: GET
+        headers:
+          - name: Accept
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        meta:
+          id: req_ticket_show
+          created: 1791500000000
+          modified: 1791500000000
+          isPrivate: false
+      - url: "{{ _.base_url }}/api/tickets/1"
+        name: Update ticket
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "status": "in_progress"
+            }
+        headers:
+          - name: Accept
+            value: application/json
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        meta:
+          id: req_ticket_update
+          created: 1791500000000
+          modified: 1791500000000
+          isPrivate: false
+      - url: "{{ _.base_url }}/api/tickets/1"
+        name: Delete ticket
+        method: DELETE
+        headers:
+          - name: Accept
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        meta:
+          id: req_ticket_delete
+          created: 1791500000000
+          modified: 1791500000000
+          isPrivate: false
+  - name: Comments
+    meta:
+      id: fld_comments
+      created: 1791500000000
+      modified: 1791500000000
+      sortKey: 3
+    children:
+      - url: "{{ _.base_url }}/api/tickets/1/comments"
+        name: Add comment
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "body": "Проверьте логи."
+            }
+        headers:
+          - name: Accept
+            value: application/json
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        meta:
+          id: req_comment_create
+          created: 1791500000000
+          modified: 1791500000000
+          isPrivate: false
+      - url: "{{ _.base_url }}/api/tickets/1/comments/1"
+        name: Delete comment
+        method: DELETE
+        headers:
+          - name: Accept
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        meta:
+          id: req_comment_delete
+          created: 1791500000000
+          modified: 1791500000000
+          isPrivate: false
+environments:
+  - name: Base Environment
+    meta:
+      id: env_base
+      created: 1791500000000
+      modified: 1791500000000
+      isPrivate: false
+    data:
+      base_url: http://127.0.0.1:8000
+      token: PASTE_TOKEN_HERE
